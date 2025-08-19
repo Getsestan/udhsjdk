@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+        <title>Home</title>
+        <link rel="icon" href="googlefavicon.png" />
+        <style type="text/css">
+		body {
+		    font-size: 12px;
+		}
+		.selected a {
+		    color: black;
+		    font-weight:bold;
+		    text-decoration: none;
+		}
+        </style>
+        <script type="text/javascript">
+		var actions = {
+		    'search':'http://www.google.com/search',
+		    'images':'http://images.google.com/images',
+		    'news':'http://news.google.com/nwshp',
+		    'maps':'http://maps.google.com/maps'
+		}
+		var labels = {
+		    'search':'Google Search',
+		    'images':'Search Images',
+		    'news':'Search News',
+		    'maps':'Search Maps'
+		}
+		var oldSelected;
+		function init()
+		{
+		    oldSelected = document.getElementById('search');
+		    document.forms['main'].elements['q'].focus();
+		}
+		function changeSearch(x)
+		{
+		    document.forms['main'].action = actions[x];
+		    document.forms['main'].elements['site'].value = x;
+		    document.forms['main'].elements['button'].value = labels[x];
+		    if (document.forms['main'].elements['q'].value != '') {
+		        document.forms['main'].submit();
+		    } else {
+		        var newSelected = document.getElementById(x)
+		        oldSelected.setAttribute('class','tab');
+		        newSelected.setAttribute('class','tab selected');
+		        oldSelected = newSelected;
+		        document.forms['main'].elements['q'].focus();
+		    }
+		}
+		function search()
+		{
+		    if (document.forms['main'].elements['q'].value != '') {
+		        document.forms['main'].submit();
+		    } else {
+		        document.forms['main'].elements['q'].focus();
+		    }
+		}
+        </script>
+    </head>
+
+    <body style="margin:0px" onload="init()">
+        <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td align="center" style="padding:0px" colspan="3"><img src="googleHome.png" width="220" height="86"/></td>
+            </tr>
+            <tr>
+                <td align="center" colspan="3">
+                    <table border="0" cellspacing="0" cellpadding="3">
+                    <tr>
+                        <td align="center" class="tab selected" id="search">
+                            <a href="javascript:changeSearch('search')">Web</a>
+                        </td>
+                        <td align="center" class="tab" id="images">
+                            <a href="javascript:changeSearch('images')">Images</a>
+                        </td>
+                        <td align="center" class="tab" id="news">
+                            <a href="javascript:changeSearch('news')">News</a>
+                        </td>
+                        <td align="center" class="tab" id="maps">
+                            <a href="javascript:changeSearch('maps')">Maps</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="padding:0px" align="center">
+                            <form id="main" method="GET" action="http://www.google.com/search">                                
+                                <input type="hidden" name="site" value="search"/>
+                                <input TYPE="text" name="q" size="30" maxlength="150" value=""/>
+                                <br/>
+                                <input type="button" name="button" value="Google Search" onclick="search()" />
+                            </form>
+                        </td>
+                    </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
